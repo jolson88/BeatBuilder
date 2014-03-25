@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
 
-  <Identity Name="e5dbd2e6-f3dd-4e72-9cf5-a8287441d8a9"
+  <Identity Name="b285fa50-55e6-4bea-b34a-ef7a8421a1f9"
             Publisher="CN=jasolson"
             Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>BeatBuilder.Win</DisplayName>
+    <DisplayName>BeatBuilder.WinApp</DisplayName>
     <PublisherDisplayName>jasolson</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,12 +23,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="BeatBuilder.Win.App">
+        EntryPoint="BeatBuilder.WinApp.App">
         <m2:VisualElements
-            DisplayName="BeatBuilder.Win"
+            DisplayName="BeatBuilder.WinApp"
             Square150x150Logo="Assets\Logo.png"
             Square30x30Logo="Assets\SmallLogo.png"
-            Description="BeatBuilder.Win"
+            Description="BeatBuilder.WinApp"
             ForegroundText="light"
             BackgroundColor="#464646">
             <m2:SplashScreen Image="Assets\SplashScreen.png" />

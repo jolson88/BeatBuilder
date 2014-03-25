@@ -122,7 +122,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mfreadwrite.lib;mfplat.lib;mfuuid.lib;mmdevapi.lib;runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -207,9 +207,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AsyncCallback.h" />
+    <ClInclude Include="AudioInterfaceActivator.h" />
+    <ClInclude Include="AudioRenderer.h" />
+    <ClInclude Include="DrumPad.h" />
+    <ClInclude Include="ISoundSource.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Sound.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioInterfaceActivator.cpp" />
+    <ClCompile Include="AudioRenderer.cpp" />
+    <ClCompile Include="DrumPad.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -218,6 +227,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
