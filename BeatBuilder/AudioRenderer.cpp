@@ -2,11 +2,13 @@
 #include "AudioRenderer.h"
 #include "AudioInterfaceActivator.h"
 #include <sstream>
+#include "BufferHelpers.h"
 
 using namespace BeatBuilder::Audio;
 using namespace Microsoft::WRL;
 using namespace Windows::Foundation;
 using namespace Windows::Media::Devices;
+using namespace Windows::Storage::Streams;
 using namespace Windows::System::Threading;
 using namespace concurrency;
 using namespace std;
@@ -34,7 +36,7 @@ AudioRenderer::~AudioRenderer()
 	MFUnlockWorkQueue(m_proAudioWorkQueueId);
 }
 
-void AudioRenderer::AddSoundSource(std::shared_ptr<ISoundSource> source)
+void AudioRenderer::SetSoundSource(ISoundSource^ source)
 {
 	m_soundSource = source;
 }
@@ -103,10 +105,8 @@ HRESULT AudioRenderer::OnRenderCallback(IMFAsyncResult *result)
 	BYTE* data = nullptr;
 	UINT32 padding;
 	UINT availableFrames = 0;
-	int bufferLength;
-	vector<float> newSampleBuffer(0);
-	bool soundSourcePlayed = false;
-
+	int bufferSize;
+	
 	EnterCriticalSection(&m_renderCallbackCS);
 	if (this->m_isTurnedOn)
 	{
@@ -114,37 +114,25 @@ HRESULT AudioRenderer::OnRenderCallback(IMFAsyncResult *result)
 
 		CHECK_AND_THROW(m_audioClient->GetCurrentPadding(&padding));
 		availableFrames = this->m_bufferSize - padding;
-		bufferLength = availableFrames * channels;
+		bufferSize = availableFrames * channels * (this->m_mixFormat->wBitsPerSample / 8);
 		CHECK_AND_THROW(m_audioRenderClient->GetBuffer(availableFrames, &data));
-
-		// Generate Sound
-		newSampleBuffer.resize(bufferLength);
-		std::fill(newSampleBuffer.begin(), newSampleBuffer.end(), 0);
 
 		if (this->m_soundSource != nullptr)
 		{
-			soundSourcePlayed = this->m_soundSource->get_next_samples(newSampleBuffer,
-				availableFrames,
-				this->m_mixFormat->nSamplesPerSec,
-				channels);
+			auto sampleBuffer = ref new Buffer(bufferSize);
+			byte* sample_data_ptr = GetBytePointerFromBuffer(sampleBuffer);
+			float* sample_float_ptr = reinterpret_cast<float*>(sample_data_ptr);
+			ZeroMemory(sample_data_ptr, bufferSize);
 
-			float *data_ptr = reinterpret_cast<float *>(data);
+			this->m_soundSource->FillNextSamples(sampleBuffer, availableFrames, channels, this->m_mixFormat->nSamplesPerSec);
+			float* data_ptr = reinterpret_cast<float *>(data);
 			for (int i = 0; i < availableFrames * channels; i++)
 			{
-				data_ptr[i] = newSampleBuffer[i];
+				data_ptr[i] = sample_float_ptr[i];
 			}
 		}
 
-		// Release WASAPI buffer
-		if (soundSourcePlayed)
-		{
-			CHECK_AND_THROW(m_audioRenderClient->ReleaseBuffer(availableFrames, 0));
-		}
-		else
-		{
-			// No sounds generated, so render silence
-			CHECK_AND_THROW(m_audioRenderClient->ReleaseBuffer(availableFrames, AUDCLNT_BUFFERFLAGS_SILENT))
-		}
+		CHECK_AND_THROW(m_audioRenderClient->ReleaseBuffer(availableFrames, 0));
 	}
 
 	// Prepare to render again

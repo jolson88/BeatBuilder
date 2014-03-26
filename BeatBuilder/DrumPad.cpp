@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "DrumPad.h"
+#include "BufferHelpers.h"
 
 using namespace std;
 using namespace BeatBuilder::Audio;
+using namespace Windows::Storage::Streams;
 
-DrumPad::DrumPad() :
-m_source(new DrumPadSource(this))
+DrumPad::DrumPad()
 {
 }
 
@@ -30,32 +31,27 @@ void DrumPad::PlayDrum(DrumKind kind)
 	m_sounds[kind]->is_playing = true;
 }
 
-DrumPad::DrumPadSource::DrumPadSource(DrumPad^ pad) :
-m_pad(pad)
+void DrumPad::FillNextSamples(IBuffer^ bufferToFill, int frameCount, int channels, int sampleRate)
 {
-}
+	byte* sample_data_ptr = GetBytePointerFromBuffer(bufferToFill);
+	float* sample_float_ptr = reinterpret_cast<float*>(sample_data_ptr);
 
-bool DrumPad::DrumPadSource::get_next_samples(vector<float>& _buffer_to_fill, const int _frame_count, const int _sample_rate, const int _channels)
-{
-	bool _sound_played = false;
-
-	for (auto it = m_pad->m_sounds.begin(); it != m_pad->m_sounds.end(); it++)
+	for (auto it = m_sounds.begin(); it != m_sounds.end(); it++)
 	{
 		// NOTE: This code currently assumes the source-wave channel count matches shared mode endpoint channel count
 		auto _sound = it->second;
 		if (_sound->is_playing)
 		{
-			_sound_played = true;
 			auto _remaining_samples = _sound->samples.size() - _sound->current_sample;
-			auto _requested_samples = _buffer_to_fill.size();
+			auto _requested_samples = frameCount * channels;
 			auto _samples_to_fill = (_requested_samples > _remaining_samples) ? _remaining_samples : _requested_samples;
 
 			for (int i = 0; i < _samples_to_fill; i++)
 			{
-				float existing_value = _buffer_to_fill[i];
+				float existing_value = sample_float_ptr[i];
 				float new_value = _sound->samples[_sound->current_sample + i];
 
-				_buffer_to_fill[i] = (existing_value + new_value);
+				sample_float_ptr[i] = (existing_value + new_value);
 			}
 			_sound->current_sample += _samples_to_fill;
 
@@ -67,6 +63,4 @@ bool DrumPad::DrumPadSource::get_next_samples(vector<float>& _buffer_to_fill, co
 			}
 		}
 	}
-
-	return _sound_played;
 }

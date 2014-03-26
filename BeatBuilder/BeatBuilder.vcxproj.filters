@@ -12,6 +12,7 @@
     <ClCompile Include="AudioRenderer.cpp" />
     <ClCompile Include="DrumPad.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="BufferHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -21,5 +22,6 @@
     <ClInclude Include="DrumPad.h" />
     <ClInclude Include="ISoundSource.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="BufferHelpers.h" />
   </ItemGroup>
 </Project>

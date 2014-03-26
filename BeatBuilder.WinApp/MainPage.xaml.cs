@@ -44,7 +44,7 @@ namespace BeatBuilder.WinApp
             this.drumPad.SetDrumSound(DrumKind.Snare, rootPath + "Drum-Snare.wav");
             this.drumPad.SetDrumSound(DrumKind.Shaker, rootPath + "Drum-Shaker.wav");
             this.drumPad.SetDrumSound(DrumKind.ClosedHiHat, rootPath + "Drum-Closed-Hi-Hat.wav");
-            this.drumPad.SetDrumSound(DrumKind.Cowbell, rootPath + "Drum-Snare.wav"); // TODO: Replace w/ Walken
+            this.drumPad.SetDrumSound(DrumKind.Cowbell, rootPath + "Cowbell.wav");
             this.drumPad.SetDrumSound(DrumKind.OpenHiHat, rootPath + "Drum-Open-Hi-Hat.wav");
             this.drumPad.SetDrumSound(DrumKind.RideCymbal, rootPath + "Drum-Ride-Cymbal.wav");
             this.drumPad.SetDrumSound(DrumKind.FloorTom, rootPath + "Drum-Floor-Tom.wav");

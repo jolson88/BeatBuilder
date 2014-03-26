@@ -15,11 +15,9 @@ namespace BeatBuilder
 
 			void Start();
 			void Stop();
+			void SetSoundSource(ISoundSource^ source);
 
 			virtual ~AudioRenderer();
-
-		internal:
-			void AddSoundSource(std::shared_ptr<ISoundSource> source);
 
 		private:
 			Microsoft::WRL::ComPtr<IAudioClient2> m_audioClient;
@@ -27,7 +25,7 @@ namespace BeatBuilder
 			WAVEFORMATEX* m_mixFormat;
 			UINT32 m_bufferSize;
 			bool m_isTurnedOn;
-			std::shared_ptr<ISoundSource> m_soundSource;
+			ISoundSource^ m_soundSource;
 			DWORD m_proAudioWorkQueueId;
 
 			// MF Callback
