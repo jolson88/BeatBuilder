@@ -18,9 +18,10 @@ namespace {
 	const double PI = atan(1.0) * 4;
 }
 
-AudioRenderer::AudioRenderer(ComPtr<IAudioClient2> audioClient) :
+AudioRenderer::AudioRenderer(ComPtr<IAudioClient2> audioClient, bool rawIsSupported) :
 m_audioClient(audioClient),
-m_renderCallback(this, &AudioRenderer::OnRenderCallback)
+m_renderCallback(this, &AudioRenderer::OnRenderCallback),
+m_rawIsSupported(rawIsSupported)
 {
 }
 
@@ -68,13 +69,16 @@ void AudioRenderer::Initialize()
 void AudioRenderer::InitializeWasapi()
 {
 	// Set Raw Processing Mode
-	AudioClientProperties audioClientProperties = { 0 };
-	audioClientProperties.cbSize = sizeof(audioClientProperties);
-	audioClientProperties.bIsOffload = false;
-	audioClientProperties.eCategory = AudioCategory_Other;
-	audioClientProperties.Options = AUDCLNT_STREAMOPTIONS_RAW;
-	CHECK_AND_THROW(m_audioClient->SetClientProperties(&audioClientProperties));
-
+	if (m_rawIsSupported)
+	{
+		AudioClientProperties audioClientProperties = { 0 };
+		audioClientProperties.cbSize = sizeof(audioClientProperties);
+		audioClientProperties.bIsOffload = false;
+		audioClientProperties.eCategory = AudioCategory_Other;
+		audioClientProperties.Options = AUDCLNT_STREAMOPTIONS_RAW;
+		CHECK_AND_THROW(m_audioClient->SetClientProperties(&audioClientProperties));		
+	}
+	
 	// Now configure our event-based rendering model w/ WASAPI
 	CHECK_AND_THROW(m_audioClient->GetMixFormat(&m_mixFormat));
 	CHECK_AND_THROW(m_audioClient->Initialize(AUDCLNT_SHAREMODE_SHARED,
@@ -149,11 +153,26 @@ IAsyncOperation<AudioRenderer^>^ AudioRenderer::CreateAsync()
 		auto defaultRenderDeviceId = MediaDevice::GetDefaultAudioRenderId(AudioDeviceRole::Default);
 
 		return AudioInterfaceActivator::ActivateAudioClientAsync(defaultRenderDeviceId->Data()).then(
-			[](ComPtr<IAudioClient2> renderClient)
+			[defaultRenderDeviceId](ComPtr<IAudioClient2> renderClient)
 		{
-			auto renderer = ref new AudioRenderer(renderClient);
-			renderer->Initialize();
-			return renderer;
+			Platform::String^ rawProcessingSupportedKey = L"System.Devices.AudioDevice.RawProcessingSupported";
+			Platform::Collections::Vector<Platform::String ^> ^properties = ref new Platform::Collections::Vector<Platform::String ^>();
+			properties->Append(rawProcessingSupportedKey);
+			
+			return create_task(Windows::Devices::Enumeration::DeviceInformation::CreateFromIdAsync(defaultRenderDeviceId, properties)).then(
+				[rawProcessingSupportedKey, renderClient](Windows::Devices::Enumeration::DeviceInformation ^device)
+			{
+				bool rawIsSupported = false;
+				if (device->Properties->HasKey(rawProcessingSupportedKey) == true)
+				{
+					rawIsSupported = safe_cast<bool>(device->Properties->Lookup(rawProcessingSupportedKey));
+				}
+			
+				auto renderer = ref new AudioRenderer(renderClient, rawIsSupported);
+				renderer->Initialize();
+				return renderer;
+			});
+
 		}, task_continuation_context::use_current());
 	});
 }

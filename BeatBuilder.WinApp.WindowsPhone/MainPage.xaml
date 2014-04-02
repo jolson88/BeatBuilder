@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="BeatBuilder.WinApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BeatBuilder.WinApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="227*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="438*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BassButton" Grid.Row="0" Grid.Column="0" Content="Bass" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="BassButton_Click" ClickMode="Press"/>
+            <Button x:Name="SnareButton" Grid.Row="0" Grid.Column="1" Content="Snare" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="SnareButton_Click" ClickMode="Press"/>
+            <Button x:Name="ShakerButton" Grid.Row="0" Grid.Column="2" Content="Shaker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="ShakerButton_Click" ClickMode="Press"/>
+            <Button x:Name="ClosedHiHatButton" Grid.Row="1" Grid.Column="0" Content="Closed Hi-Hat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="ClosedHiHatButton_Click" ClickMode="Press"/>
+            <Button x:Name="CowbellButton" Grid.Row="1" Grid.Column="1" Content="Cowbell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="CowbellButton_Click" ClickMode="Press"/>
+            <Button x:Name="OpenHiHatButton" Grid.Row="1" Grid.Column="2" Content="Open Hi-Hat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="OpenHiHatButton_Click" ClickMode="Press"/>
+            <Button x:Name="RideCymbalButton" Grid.Row="2" Grid.Column="0" Content="Ride Cymbal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="RideCymbalButton_Click" ClickMode="Press"/>
+            <Button x:Name="FloorTomButton" Grid.Row="2" Grid.Column="1" Content="Floor Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="FloorTomButton_Click" ClickMode="Press"/>
+            <Button x:Name="HighTomButton" Grid.Row="2" Grid.Column="2" Content="High Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="HighTomButton_Click" ClickMode="Press"/>
+        </Grid>
+    </Grid>
+</Page>

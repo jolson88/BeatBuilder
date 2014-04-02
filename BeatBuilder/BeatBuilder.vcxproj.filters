@@ -6,22 +6,4 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="AudioInterfaceActivator.cpp" />
-    <ClCompile Include="AudioRenderer.cpp" />
-    <ClCompile Include="DrumPad.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="BufferHelpers.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="AsyncCallback.h" />
-    <ClInclude Include="AudioInterfaceActivator.h" />
-    <ClInclude Include="AudioRenderer.h" />
-    <ClInclude Include="DrumPad.h" />
-    <ClInclude Include="ISoundSource.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="BufferHelpers.h" />
-  </ItemGroup>
 </Project>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\Sound.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\pch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioInterfaceActivator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\BufferHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\DrumPad.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\Sound.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\ISoundSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AsyncCallback.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioInterfaceActivator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\BufferHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\DrumPad.h" />
+  </ItemGroup>
+</Project>

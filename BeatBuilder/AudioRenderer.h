@@ -25,6 +25,7 @@ namespace BeatBuilder
 			WAVEFORMATEX* m_mixFormat;
 			UINT32 m_bufferSize;
 			bool m_isTurnedOn;
+			bool m_rawIsSupported;
 			ISoundSource^ m_soundSource;
 			DWORD m_proAudioWorkQueueId;
 
@@ -36,7 +37,7 @@ namespace BeatBuilder
 			MFWORKITEM_KEY m_renderCallbackKey;
 			CRITICAL_SECTION m_renderCallbackCS;
 
-			AudioRenderer(Microsoft::WRL::ComPtr<IAudioClient2> renderClient);
+			AudioRenderer(Microsoft::WRL::ComPtr<IAudioClient2> renderClient, bool rawIsSupported);
 			void Initialize();
 			void InitializeWasapi();
 			void InitializeMediaFoundation();
