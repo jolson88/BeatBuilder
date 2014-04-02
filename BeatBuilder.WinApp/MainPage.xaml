@@ -9,14 +9,14 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="227*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="438*"/>
             <ColumnDefinition Width="245*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -37,7 +37,12 @@
             <Button x:Name="FloorTomButton" Grid.Row="2" Grid.Column="1" Content="Floor Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="FloorTomButton_Click" ClickMode="Press"/>
             <Button x:Name="HighTomButton" Grid.Row="2" Grid.Column="2" Content="High Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="HighTomButton_Click" ClickMode="Press"/>
         </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+            <TextBlock x:Name="MetronomeDebug" FontSize="24" />
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="RecordButton" Content="Record Loop" Margin="20" Click="RecordButton_Click"/>
+            <TextBlock x:Name="RecordingDebug" FontSize="24" />
         </StackPanel>
     </Grid>
 </Page>

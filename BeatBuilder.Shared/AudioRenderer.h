@@ -3,19 +3,20 @@
 #include <mmdeviceapi.h>
 #include "ISoundSource.h"
 #include "AsyncCallback.h"
+#include "ISoundListener.h"
 
 namespace BeatBuilder
 {
 	namespace Audio
 	{
-		public ref class AudioRenderer sealed
+		public ref class AudioRenderer sealed : ISoundListener
 		{
 		public:
 			static Windows::Foundation::IAsyncOperation<AudioRenderer^>^ CreateAsync();
 
 			void Start();
 			void Stop();
-			void SetSoundSource(ISoundSource^ source);
+			virtual void ListenTo(ISoundSource^ source);
 
 			virtual ~AudioRenderer();
 
@@ -28,6 +29,7 @@ namespace BeatBuilder
 			bool m_rawIsSupported;
 			ISoundSource^ m_soundSource;
 			DWORD m_proAudioWorkQueueId;
+			WaveFormat^ m_waveFormat;
 
 			// MF Callback
 			HRESULT OnRenderCallback(IMFAsyncResult* result); 

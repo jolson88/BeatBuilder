@@ -37,9 +37,10 @@ AudioRenderer::~AudioRenderer()
 	MFUnlockWorkQueue(m_proAudioWorkQueueId);
 }
 
-void AudioRenderer::SetSoundSource(ISoundSource^ source)
+void AudioRenderer::ListenTo(ISoundSource^ source)
 {
 	m_soundSource = source;
+	m_soundSource->SetWaveFormat(m_waveFormat);
 }
 
 void AudioRenderer::Start()
@@ -62,6 +63,7 @@ void AudioRenderer::Initialize()
 
 	InitializeWasapi();
 	InitializeMediaFoundation();
+	m_waveFormat = ref new WaveFormat(m_mixFormat->nSamplesPerSec, m_mixFormat->wBitsPerSample, m_mixFormat->nChannels);
 
 	CHECK_AND_THROW(m_audioClient->Start());
 }

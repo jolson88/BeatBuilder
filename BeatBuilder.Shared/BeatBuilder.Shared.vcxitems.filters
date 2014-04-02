@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\Sound.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\pch.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioInterfaceActivator.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\BufferHelpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\BeatBuilder\DrumPad.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Metronome.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Looper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioInterfaceActivator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BufferHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DrumPad.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\Sound.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\ISoundSource.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\pch.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AsyncCallback.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioInterfaceActivator.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\AudioRenderer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\BufferHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\BeatBuilder\DrumPad.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISoundListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Metronome.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Looper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncCallback.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioInterfaceActivator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BufferHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DrumPad.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISoundSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sound.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WaveFormat.h" />
   </ItemGroup>
 </Project>

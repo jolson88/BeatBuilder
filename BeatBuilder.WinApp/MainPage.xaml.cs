@@ -24,8 +24,10 @@ namespace BeatBuilder.WinApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        Metronome metronome;
         AudioRenderer renderer;
         DrumPad drumPad;
+        Looper looper;
 
         public MainPage()
         {
@@ -36,7 +38,6 @@ namespace BeatBuilder.WinApp
         async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             this.renderer = await AudioRenderer.CreateAsync();
-            this.renderer.Start();
 
             var rootPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path + "\\Sounds\\";
             this.drumPad = new DrumPad();
@@ -50,7 +51,36 @@ namespace BeatBuilder.WinApp
             this.drumPad.SetDrumSound(DrumKind.FloorTom, rootPath + "Drum-Floor-Tom.wav");
             this.drumPad.SetDrumSound(DrumKind.HighTom, rootPath + "Drum-High-Tom.wav");
 
-            this.drumPad.SetRenderer(this.renderer);
+            this.metronome = new Metronome(120, TickResolution.QuarterNote);
+            this.looper = new Looper(metronome);
+
+            this.renderer.ListenTo(this.looper);
+            this.looper.ListenTo(this.drumPad);
+
+            this.metronome.Start();
+            this.renderer.Start();
+
+            // Debug output
+            this.looper.CountdownChanged += (args) =>
+            {
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    this.RecordingDebug.Text = args.TicksLeft.ToString();
+                });
+            };
+
+            this.metronome.AddTickListener(new TickHandler(() =>
+            {
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    this.MetronomeDebug.Text += ".";
+                });
+            }));
+        }
+
+        void looper_CountdownChanged(CountdownChangedEventArgs args)
+        {
+            throw new NotImplementedException();
         }
 
         private void BassButton_Click(object sender, RoutedEventArgs e)
@@ -96,6 +126,11 @@ namespace BeatBuilder.WinApp
         private void HighTomButton_Click(object sender, RoutedEventArgs e)
         {
             this.drumPad.PlayDrum(DrumKind.HighTom);
+        }
+
+        private void RecordButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.looper.StartRecording();
         }
     }
 }
