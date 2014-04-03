@@ -37,12 +37,10 @@
             <Button x:Name="FloorTomButton" Grid.Row="2" Grid.Column="1" Content="Floor Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="FloorTomButton_Click" ClickMode="Press"/>
             <Button x:Name="HighTomButton" Grid.Row="2" Grid.Column="2" Content="High Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="HighTomButton_Click" ClickMode="Press"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
-            <TextBlock x:Name="MetronomeDebug" FontSize="24" />
-        </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="RecordButton" Content="Record Loop" Margin="20" Click="RecordButton_Click"/>
-            <TextBlock x:Name="RecordingDebug" FontSize="24" />
+            <Button x:Name="RecordStartButton" Content="Start Recording" Margin="20" Click="RecordStartButton_Click" ClickMode="Press" />
+            <Button x:Name="RecordStopButton" Content="Stop Recording" Margin="20" Click="RecordStopButton_Click" ClickMode="Press" />
+
         </StackPanel>
     </Grid>
 </Page>

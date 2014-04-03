@@ -51,31 +51,11 @@ namespace BeatBuilder.WinApp
             this.drumPad.SetDrumSound(DrumKind.FloorTom, rootPath + "Drum-Floor-Tom.wav");
             this.drumPad.SetDrumSound(DrumKind.HighTom, rootPath + "Drum-High-Tom.wav");
 
-            this.metronome = new Metronome(120, TickResolution.QuarterNote);
-            this.looper = new Looper(metronome);
-
+            this.looper = new Looper();
             this.renderer.ListenTo(this.looper);
             this.looper.ListenTo(this.drumPad);
 
-            this.metronome.Start();
             this.renderer.Start();
-
-            // Debug output
-            this.looper.CountdownChanged += (args) =>
-            {
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    this.RecordingDebug.Text = args.TicksLeft.ToString();
-                });
-            };
-
-            this.metronome.AddTickListener(new TickHandler(() =>
-            {
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    this.MetronomeDebug.Text += ".";
-                });
-            }));
         }
 
         void looper_CountdownChanged(CountdownChangedEventArgs args)
@@ -128,9 +108,14 @@ namespace BeatBuilder.WinApp
             this.drumPad.PlayDrum(DrumKind.HighTom);
         }
 
-        private void RecordButton_Click(object sender, RoutedEventArgs e)
+        private void RecordStartButton_Click(object sender, RoutedEventArgs e)
         {
             this.looper.StartRecording();
+        }
+
+        private void RecordStopButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.looper.StopRecording();
         }
     }
 }

@@ -22,10 +22,11 @@ namespace BeatBuilder
 		public ref class Looper sealed : ISoundSource, ISoundListener
 		{
 		public:
-			Looper(Metronome^ metronome);
+			Looper();
 			virtual ~Looper();
 
 			void StartRecording();
+			void StopRecording();
 			virtual void FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, int frameCount, int channels, int sampleRate);
 			virtual void ListenTo(ISoundSource^ source);
 			virtual void SetWaveFormat(WaveFormat^ format);
@@ -36,8 +37,13 @@ namespace BeatBuilder
 			ISoundSource^ m_source;
 			WaveFormat^ m_format;
 			Metronome^ m_metronome;
-			int m_countdown;
-			bool m_recordRequested;
+			bool m_startRecordRequested;
+			bool m_stopRecordRequested;
+			bool m_isRecording;
+			int m_loopsRecorded;
+			std::vector<std::vector<float>> m_recordedLoops;
+			int m_loopSampleCount;
+			int m_currentSample;
 
 			void OnTick();
 		};
