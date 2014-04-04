@@ -49,8 +49,8 @@ namespace BeatBuilder.WinApp
             this.drumPad.SetDrumSound(DrumKind.Cowbell, rootPath + "Cowbell.wav");
             this.drumPad.SetDrumSound(DrumKind.OpenHiHat, rootPath + "Drum-Open-Hi-Hat.wav");
             this.drumPad.SetDrumSound(DrumKind.RideCymbal, rootPath + "Drum-Ride-Cymbal.wav");
-            this.drumPad.SetDrumSound(DrumKind.FloorTom, rootPath + "Drum-Floor-Tom.wav");
-            this.drumPad.SetDrumSound(DrumKind.HighTom, rootPath + "Drum-High-Tom.wav");
+            this.drumPad.SetDrumSound(DrumKind.FloorTom, rootPath + "developer_loud.wav");
+            this.drumPad.SetDrumSound(DrumKind.HighTom, rootPath + "satya_fantastic.wav");
 
             this.looper = new Looper();
             this.renderer.ListenTo(this.looper);
@@ -146,6 +146,11 @@ namespace BeatBuilder.WinApp
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             this.looper.ResetLoops();
+        }
+
+        private void Bass_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            this.drumPad.PlayDrum(DrumKind.Bass);
         }
     }
 }

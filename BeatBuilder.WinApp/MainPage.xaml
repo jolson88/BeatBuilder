@@ -9,14 +9,16 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
-            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="438*"/>
-            <ColumnDefinition Width="245*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0">
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,0,0" FontSize="36">Performance</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="20,0,0,0" FontSize="36">Controls</TextBlock>
+        <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -27,20 +29,36 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="BassButton" Grid.Row="0" Grid.Column="0" Content="Bass" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="BassButton_Click" ClickMode="Press"/>
-            <Button x:Name="SnareButton" Grid.Row="0" Grid.Column="1" Content="Snare" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="SnareButton_Click" ClickMode="Press"/>
-            <Button x:Name="ShakerButton" Grid.Row="0" Grid.Column="2" Content="Shaker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="ShakerButton_Click" ClickMode="Press"/>
-            <Button x:Name="ClosedHiHatButton" Grid.Row="1" Grid.Column="0" Content="Closed Hi-Hat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="ClosedHiHatButton_Click" ClickMode="Press"/>
-            <Button x:Name="CowbellButton" Grid.Row="1" Grid.Column="1" Content="Cowbell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="CowbellButton_Click" ClickMode="Press"/>
-            <Button x:Name="OpenHiHatButton" Grid.Row="1" Grid.Column="2" Content="Open Hi-Hat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="OpenHiHatButton_Click" ClickMode="Press"/>
-            <Button x:Name="RideCymbalButton" Grid.Row="2" Grid.Column="0" Content="Ride Cymbal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="RideCymbalButton_Click" ClickMode="Press"/>
-            <Button x:Name="FloorTomButton" Grid.Row="2" Grid.Column="1" Content="Floor Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="FloorTomButton_Click" ClickMode="Press"/>
-            <Button x:Name="HighTomButton" Grid.Row="2" Grid.Column="2" Content="High Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="HighTomButton_Click" ClickMode="Press"/>
+            <Button x:Name="BassButton" Grid.Row="0" Grid.Column="0" Content="Bass" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="BassButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="SnareButton" Grid.Row="0" Grid.Column="1" Content="Snare" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="SnareButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="ShakerButton" Grid.Row="0" Grid.Column="2" Content="Shaker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="ShakerButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="ClosedHiHatButton" Grid.Row="1" Grid.Column="0" Content="Closed Hi-Hat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="ClosedHiHatButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="CowbellButton" Grid.Row="1" Grid.Column="1" Content="Cowbell" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="CowbellButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="OpenHiHatButton" Grid.Row="1" Grid.Column="2" Content="Open Hi-Hat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="OpenHiHatButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="RideCymbalButton" Grid.Row="2" Grid.Column="0" Content="Ride Cymbal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="RideCymbalButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="FloorTomButton" Grid.Row="2" Grid.Column="1" Content="Floor Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="FloorTomButton_Click" ClickMode="Press" Background="#FF5B5959"/>
+            <Button x:Name="HighTomButton" Grid.Row="2" Grid.Column="2" Content="High Tom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Click="HighTomButton_Click" ClickMode="Press" Background="#FF5B5959"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="RecordStartButton" Content="Start Recording" Margin="20" Click="RecordStartButton_Click" ClickMode="Press" />
-            <Button x:Name="RecordStopButton" Content="Stop Recording" Margin="20" Click="RecordStopButton_Click" ClickMode="Press" />
-            <Button x:Name="ResetButton" Content="Reset Loops" Margin="20" Click="ResetButton_Click" />
-        </StackPanel>
+        <Viewbox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel>
+                <AppBarButton x:Name="RecordStartButton" Label="Start Recording" Margin="10" Click="RecordStartButton_Click" ClickMode="Press">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#x1f4fc;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton x:Name="RecordStopButton" Label="Stop Recording" Margin="10" Click="RecordStopButton_Click" ClickMode="Press">
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Stop" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton x:Name="ResetButton" Label="Reset Loops" Margin="10" Click="ResetButton_Click">
+                    <AppBarButton.Icon>
+                        <SymbolIcon Symbol="Delete" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </StackPanel>
+        </Viewbox>
     </Grid>
 </Page>
