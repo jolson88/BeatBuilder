@@ -40,9 +40,7 @@ namespace BeatBuilder
 			bool m_startRecordRequested;
 			bool m_stopRecordRequested;
 			bool m_isRecording;
-			int m_loopsRecorded;
 			std::vector<std::vector<float>> m_recordedLoops;
-			int m_loopSampleCount;
 			int m_currentSample;
 
 			void OnTick();

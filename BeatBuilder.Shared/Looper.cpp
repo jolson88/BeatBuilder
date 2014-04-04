@@ -5,8 +5,7 @@
 using namespace BeatBuilder::Audio;
 
 Looper::Looper() :
-m_currentSample(0),
-m_loopSampleCount(1)
+m_currentSample(0)
 {
 }
 
@@ -35,17 +34,17 @@ void Looper::FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, i
 	for (int i = 0; i < frameCount * channels; i++)
 	{	
 		// Do some recording if we need to 
-		if (m_startRecordRequested && m_loopsRecorded == 0 && !m_isRecording)
+		// TODO: Try refactoring code to current recording sample being separate from vector of recorded loops
+		if (m_startRecordRequested && m_recordedLoops.size() == 1 && !m_isRecording)
 		{
 			OutputDebugString(L"Recording Started on First Loop... \n");
 			m_currentSample = 0;
 			m_isRecording = true;
 		}
-		else if (m_startRecordRequested && m_loopsRecorded > 0 && !m_isRecording && m_currentSample == 0)
+		else if (m_startRecordRequested && m_recordedLoops.size() > 1 && !m_isRecording && m_currentSample == 0)
 		{
 			OutputDebugString(L"Recording Started on Next Loop... \n");
 			m_isRecording = true;
-			m_recordedLoops.push_back(std::vector<float>(m_loopSampleCount));
 		}
 
 		if (m_isRecording)
@@ -55,7 +54,7 @@ void Looper::FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, i
 		}
 
 		// Play recorded loops
-		if (m_loopsRecorded > 0)
+		if (m_recordedLoops.size() > 1)
 		{
 			// This i/j stuff is brittle and confusing. Clean up iteration.
 			for (auto j = 0; j != m_recordedLoops.size(); j++)
@@ -63,10 +62,10 @@ void Looper::FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, i
 				sampleFloatPtr[i] = sampleFloatPtr[i] + m_recordedLoops[j][m_currentSample];
 			}
 		}
-		m_currentSample = (m_currentSample + 1) % m_loopSampleCount;
+		m_currentSample = (m_currentSample + 1) % (m_recordedLoops[0].size() - 1);
 
 		// Do we need to stop recording?
-		if (m_stopRecordRequested && m_loopsRecorded == 0)
+		if (m_stopRecordRequested && m_recordedLoops.size() == 1)
 		{
 			OutputDebugString(L"First loop recorded \n");
 			m_isRecording = false;
@@ -74,17 +73,21 @@ void Looper::FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, i
 			m_stopRecordRequested = false;
 
 			// Resize so ongoing loops are the same size as this
-			m_loopSampleCount = m_currentSample + 1;
-			m_recordedLoops[0].resize(m_loopSampleCount);
-			m_loopsRecorded++;
+			m_recordedLoops[0].resize(m_currentSample);
+			m_currentSample = 0;
+
+			// TODO: Extract out to method that is used
+			m_recordedLoops.push_back(std::vector<float>(m_recordedLoops[0].size()));
 		}
-		else if (m_currentSample == m_loopSampleCount - 1 && m_isRecording)
+		else if (m_currentSample == 0 && m_isRecording)
 		{
 			// Our current recording just reached the end of loop length
 			m_isRecording = false;
 			m_startRecordRequested = false;
 			m_stopRecordRequested = false;
-			m_loopsRecorded++;
+
+			// Get our next buffer ready
+			m_recordedLoops.push_back(std::vector<float>(m_recordedLoops[0].size()));
 		}
 	}
 }
@@ -102,15 +105,14 @@ void Looper::SetWaveFormat(WaveFormat^ format)
 		m_source->SetWaveFormat(format);
 	}
 
-	if (m_loopsRecorded == 0)
+	if (m_recordedLoops.size() == 0)
 	{
 		auto totalSamplesPerSecond = format->SamplesPerSecond * format->Channels;
 		auto maximumSamplesForLoop = totalSamplesPerSecond * 5; // 5 seconds is maximum for loop
 		m_recordedLoops = std::vector<std::vector<float>>();
 		m_recordedLoops.push_back(std::vector<float>(maximumSamplesForLoop));
-		std::fill(m_recordedLoops[0].begin(), m_recordedLoops[0].end(), 0);
 		
-		// TODO: This is brittle, move this to method that looks up based on first sample in loop vector (and get rid of this variable)	
-		m_loopSampleCount = maximumSamplesForLoop;
+		// TODO: Check to see if I can remove this:
+		std::fill(m_recordedLoops[0].begin(), m_recordedLoops[0].end(), 0);
 	}
 }

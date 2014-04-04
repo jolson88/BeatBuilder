@@ -129,7 +129,7 @@ HRESULT AudioRenderer::OnRenderCallback(IMFAsyncResult *result)
 			byte* sample_data_ptr = GetBytePointerFromBuffer(sampleBuffer);
 			float* sample_float_ptr = reinterpret_cast<float*>(sample_data_ptr);
 			ZeroMemory(sample_data_ptr, bufferSize);
-
+			
 			this->m_soundSource->FillNextSamples(sampleBuffer, availableFrames, channels, this->m_mixFormat->nSamplesPerSec);
 			float* data_ptr = reinterpret_cast<float *>(data);
 			for (int i = 0; i < availableFrames * channels; i++)
