@@ -70,17 +70,13 @@ void AudioRenderer::Initialize()
 
 void AudioRenderer::InitializeWasapi()
 {
-	// Set Raw Processing Mode
-	if (m_rawIsSupported)
-	{
-		AudioClientProperties audioClientProperties = { 0 };
-		audioClientProperties.cbSize = sizeof(audioClientProperties);
-		audioClientProperties.bIsOffload = false;
-		audioClientProperties.eCategory = AudioCategory_Other;
-		audioClientProperties.Options = AUDCLNT_STREAMOPTIONS_RAW;
-		CHECK_AND_THROW(m_audioClient->SetClientProperties(&audioClientProperties));		
-	}
-	
+	AudioClientProperties audioClientProperties = { 0 };
+	audioClientProperties.cbSize = sizeof(audioClientProperties);
+	audioClientProperties.bIsOffload = false;
+	audioClientProperties.eCategory = AudioCategory_BackgroundCapableMedia;
+	audioClientProperties.Options = (m_rawIsSupported) ? AUDCLNT_STREAMOPTIONS_RAW : AUDCLNT_STREAMOPTIONS_NONE;
+	CHECK_AND_THROW(m_audioClient->SetClientProperties(&audioClientProperties));
+
 	// Now configure our event-based rendering model w/ WASAPI
 	CHECK_AND_THROW(m_audioClient->GetMixFormat(&m_mixFormat));
 	CHECK_AND_THROW(m_audioClient->Initialize(AUDCLNT_SHAREMODE_SHARED,

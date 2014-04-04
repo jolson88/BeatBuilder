@@ -31,11 +31,13 @@ namespace BeatBuilder
 			WaveFormat^ m_format;
 			bool m_startRecordRequested;
 			bool m_stopRecordRequested;
+			bool m_resetRequested;
 			bool m_isRecording;
 			std::vector<std::vector<float>> m_loops;
 			std::vector<float> m_recordingLoop;
 			int m_currentSample;
 
+			void ClearLoops();
 			bool ThereAreLoopsToPlay();
 			bool ReadyToStartRecording();
 			bool ReadyToStopRecording();

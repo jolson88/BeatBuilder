@@ -17,6 +17,11 @@ void Looper::StopRecording()
 	m_stopRecordRequested = true;
 }
 
+void Looper::ResetLoops()
+{
+	m_resetRequested = true;
+}
+
 void Looper::FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, int frameCount, int channels, int sampleRate)
 {
 	m_source->FillNextSamples(bufferToFill, frameCount, channels, sampleRate);
@@ -56,6 +61,11 @@ void Looper::FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, i
 			FinishRecording();
 		}
 	}
+
+	if (m_resetRequested)
+	{
+		ClearLoops();
+	}
 }
 
 void Looper::ListenTo(ISoundSource^ source)
@@ -71,10 +81,10 @@ void Looper::SetWaveFormat(WaveFormat^ format)
 		m_source->SetWaveFormat(format);
 	}
 
-	ResetLoops();
+	ClearLoops();
 }
 
-void Looper::ResetLoops()
+void Looper::ClearLoops()
 {
 	FinishRecording();
 	auto totalSamplesPerSecond = m_format->SamplesPerSecond * m_format->Channels;
@@ -82,6 +92,7 @@ void Looper::ResetLoops()
 	
 	m_loops = std::vector<std::vector<float>>();
 	m_recordingLoop = std::vector<float>(maximumSamplesForLoop);
+	m_resetRequested = false;
 }
 
 bool Looper::ThereAreLoopsToPlay()

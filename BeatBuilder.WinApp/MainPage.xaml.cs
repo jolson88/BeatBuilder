@@ -14,11 +14,13 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BeatBuilder.Audio;
 using System.Threading.Tasks;
+using Windows.Media;
 
 namespace BeatBuilder.WinApp
 {
     public sealed partial class MainPage : Page
     {
+        SystemMediaTransportControls systemControls;
         AudioRenderer renderer;
         DrumPad drumPad;
         Looper looper;
@@ -31,6 +33,11 @@ namespace BeatBuilder.WinApp
 
         async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            this.systemControls = SystemMediaTransportControls.GetForCurrentView();
+            this.systemControls.ButtonPressed += systemControls_ButtonPressed;
+            this.systemControls.IsPlayEnabled = true;
+            this.systemControls.IsPauseEnabled = true;
+
             this.renderer = await AudioRenderer.CreateAsync();
 
             var rootPath = Windows.ApplicationModel.Package.Current.InstalledLocation.Path + "\\Sounds\\";
@@ -49,7 +56,36 @@ namespace BeatBuilder.WinApp
             this.renderer.ListenTo(this.looper);
             this.looper.ListenTo(this.drumPad);
 
+            Play();
+        }
+
+        void systemControls_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
+        {
+            switch (args.Button)
+            {
+                case SystemMediaTransportControlsButton.Play:
+                    Play();
+                    break;
+
+                case SystemMediaTransportControlsButton.Pause:
+                    Pause();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void Play()
+        {
             this.renderer.Start();
+            this.systemControls.PlaybackStatus = MediaPlaybackStatus.Playing;
+        }
+
+        private void Pause()
+        {
+            this.renderer.Stop();
+            this.systemControls.PlaybackStatus = MediaPlaybackStatus.Paused;
         }
 
         private void BassButton_Click(object sender, RoutedEventArgs e)
