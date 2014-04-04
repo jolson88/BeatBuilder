@@ -58,11 +58,6 @@ namespace BeatBuilder.WinApp
             this.renderer.Start();
         }
 
-        void looper_CountdownChanged(CountdownChangedEventArgs args)
-        {
-            throw new NotImplementedException();
-        }
-
         private void BassButton_Click(object sender, RoutedEventArgs e)
         {
             this.drumPad.PlayDrum(DrumKind.Bass);

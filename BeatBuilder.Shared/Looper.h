@@ -8,16 +8,7 @@ namespace BeatBuilder
 {
 	namespace Audio
 	{
-		public ref class CountdownChangedEventArgs sealed
-		{
-		public:
-			CountdownChangedEventArgs(int ticksLeft) { this->TicksLeft = ticksLeft; }
-			virtual ~CountdownChangedEventArgs() { }
-
-			property int TicksLeft;
-		};
-
-		public delegate void CountdownChangedEventHandler(CountdownChangedEventArgs^ args);
+		public delegate void StatusChangedEventHandler();
 
 		public ref class Looper sealed : ISoundSource, ISoundListener
 		{
@@ -31,19 +22,18 @@ namespace BeatBuilder
 			virtual void ListenTo(ISoundSource^ source);
 			virtual void SetWaveFormat(WaveFormat^ format);
 
-			event CountdownChangedEventHandler^ CountdownChanged;
+			event StatusChangedEventHandler^ RecordingStarted;
+			event StatusChangedEventHandler^ RecordingStopped;
 
 		private:
 			ISoundSource^ m_source;
 			WaveFormat^ m_format;
-			Metronome^ m_metronome;
 			bool m_startRecordRequested;
 			bool m_stopRecordRequested;
 			bool m_isRecording;
-			std::vector<std::vector<float>> m_recordedLoops;
+			std::vector<std::vector<float>> m_loops;
+			std::vector<float> m_recordingLoop;
 			int m_currentSample;
-
-			void OnTick();
 		};
 	}
 }
