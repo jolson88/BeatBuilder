@@ -18,6 +18,7 @@ namespace BeatBuilder
 
 			void StartRecording();
 			void StopRecording();
+			void ResetLoops();
 			virtual void FillNextSamples(Windows::Storage::Streams::IBuffer^ bufferToFill, int frameCount, int channels, int sampleRate);
 			virtual void ListenTo(ISoundSource^ source);
 			virtual void SetWaveFormat(WaveFormat^ format);
@@ -34,6 +35,11 @@ namespace BeatBuilder
 			std::vector<std::vector<float>> m_loops;
 			std::vector<float> m_recordingLoop;
 			int m_currentSample;
+
+			bool ThereAreLoopsToPlay();
+			bool ReadyToStartRecording();
+			bool ReadyToStopRecording();
+			void FinishRecording();
 		};
 	}
 }

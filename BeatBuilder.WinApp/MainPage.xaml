@@ -40,7 +40,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="RecordStartButton" Content="Start Recording" Margin="20" Click="RecordStartButton_Click" ClickMode="Press" />
             <Button x:Name="RecordStopButton" Content="Stop Recording" Margin="20" Click="RecordStopButton_Click" ClickMode="Press" />
-
+            <Button x:Name="ResetButton" Content="Reset Loops" Margin="20" Click="ResetButton_Click" />
         </StackPanel>
     </Grid>
 </Page>

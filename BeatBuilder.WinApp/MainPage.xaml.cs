@@ -15,16 +15,10 @@ using Windows.UI.Xaml.Navigation;
 using BeatBuilder.Audio;
 using System.Threading.Tasks;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace BeatBuilder.WinApp
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
-        Metronome metronome;
         AudioRenderer renderer;
         DrumPad drumPad;
         Looper looper;
@@ -111,6 +105,11 @@ namespace BeatBuilder.WinApp
         private void RecordStopButton_Click(object sender, RoutedEventArgs e)
         {
             this.looper.StopRecording();
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.looper.ResetLoops();
         }
     }
 }
