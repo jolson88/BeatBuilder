@@ -58,6 +58,13 @@
                         <SymbolIcon Symbol="Delete" />
                     </AppBarButton.Icon>
                 </AppBarButton>
+
+                <AppBarButton x:Name="OscillatorTestButton" Label="Test Oscillator" Margin="10" ClickMode="Press" PointerPressed="OscillatorTestButton_PointerPressed" PointerReleased="OscillatorTestButton_PointerReleased">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE189;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
             </StackPanel>
         </Viewbox>
     </Grid>
