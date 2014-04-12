@@ -14,5 +14,6 @@ namespace BeatBuilder
 	namespace Audio
 	{
 		byte* GetBytePointerFromBuffer(Windows::Storage::Streams::IBuffer^ buffer);
+		Windows::Storage::Streams::IBuffer^ CreateBuffer(int bufferSizeInBytes);
 	}
 }

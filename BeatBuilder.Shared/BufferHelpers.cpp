@@ -15,3 +15,12 @@ byte* BeatBuilder::Audio::GetBytePointerFromBuffer(Windows::Storage::Streams::IB
 	CHECK_AND_THROW(bufferAccess->Buffer(&bytePointer));
 	return bytePointer;
 }
+
+Windows::Storage::Streams::IBuffer^ BeatBuilder::Audio::CreateBuffer(int bufferSizeInBytes)
+{
+	auto buffer = ref new Windows::Storage::Streams::Buffer(bufferSizeInBytes);
+	byte* sample_data_ptr = GetBytePointerFromBuffer(buffer);
+	ZeroMemory(sample_data_ptr, bufferSizeInBytes);
+
+	return buffer;
+}

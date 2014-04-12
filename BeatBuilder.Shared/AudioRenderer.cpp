@@ -121,16 +121,14 @@ HRESULT AudioRenderer::OnRenderCallback(IMFAsyncResult *result)
 
 		if (this->m_soundSource != nullptr)
 		{
-			auto sampleBuffer = ref new Buffer(bufferSize);
-			byte* sample_data_ptr = GetBytePointerFromBuffer(sampleBuffer);
-			float* sample_float_ptr = reinterpret_cast<float*>(sample_data_ptr);
-			ZeroMemory(sample_data_ptr, bufferSize);
+			auto sampleBuffer = CreateBuffer(bufferSize);
+			float* bufferFloatPtr = reinterpret_cast<float*>(GetBytePointerFromBuffer(sampleBuffer));
 			
 			this->m_soundSource->FillNextSamples(sampleBuffer, availableFrames, channels, this->m_mixFormat->nSamplesPerSec);
-			float* data_ptr = reinterpret_cast<float *>(data);
+			float* dataFloatPtr = reinterpret_cast<float *>(data);
 			for (int i = 0; i < availableFrames * channels; i++)
 			{
-				data_ptr[i] = sample_float_ptr[i];
+				dataFloatPtr[i] = bufferFloatPtr[i];
 			}
 		}
 
