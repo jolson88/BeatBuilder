@@ -50,7 +50,18 @@ namespace BeatBuilder.Audio
         {
             if (m_isOn)
             {
+                var floatBuffer = new FloatBuffer(bufferToFill);
 
+                // The lookup table is just Mono, so need to output appropriate channels
+                for (int i = 0; i < floatBuffer.Length; i=i+channels)
+                {
+                    for (int j = 0; j < channels; j++)
+                    {
+                        floatBuffer[i+j] = m_sampleLookup[(int)m_phaseAccumulator];
+                    }
+
+                    m_phaseAccumulator = (m_phaseAccumulator + m_phaseDelta) % LOOKUP_SAMPLE_COUNT;
+                }
             }
         }
 

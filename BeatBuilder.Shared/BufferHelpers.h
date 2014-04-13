@@ -15,5 +15,6 @@ namespace BeatBuilder
 	{
 		byte* GetBytePointerFromBuffer(Windows::Storage::Streams::IBuffer^ buffer);
 		Windows::Storage::Streams::IBuffer^ CreateBuffer(int bufferSizeInBytes);
+		void ResetBuffer(Windows::Storage::Streams::IBuffer^ buffer, int bufferSizeInBytes);
 	}
 }

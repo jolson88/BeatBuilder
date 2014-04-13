@@ -9,6 +9,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DrumPad.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sound.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioDemultiplexer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ISoundListener.h" />
@@ -23,5 +24,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sound.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WaveFormat.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioDemultiplexer.h" />
   </ItemGroup>
 </Project>

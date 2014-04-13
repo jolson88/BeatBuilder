@@ -25,6 +25,7 @@ namespace BeatBuilder.WinApp
         DrumPad drumPad;
         Looper looper;
         Oscillator oscillator;
+        AudioDemultiplexer demultiplexer;
 
         public MainPage()
         {
@@ -54,13 +55,13 @@ namespace BeatBuilder.WinApp
             this.drumPad.SetDrumSound(DrumKind.HighTom, rootPath + "satya_fantastic.wav");
 
             this.oscillator = new Oscillator();
-
             this.looper = new Looper();
-            
-            //this.renderer.ListenTo(this.looper);
-            this.renderer.ListenTo(this.oscillator);
+            this.demultiplexer = new AudioDemultiplexer();
 
             this.looper.ListenTo(this.drumPad);
+            this.demultiplexer.ListenTo(this.looper);
+            this.demultiplexer.ListenTo(this.oscillator);
+            this.renderer.ListenTo(this.demultiplexer);
 
             Play();
         }
@@ -159,14 +160,14 @@ namespace BeatBuilder.WinApp
             this.drumPad.PlayDrum(DrumKind.Bass);
         }
 
-        private void OscillatorTestButton_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
         private void OscillatorTestButton_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            this.oscillator.TurnOff();
+        }
 
+        private void OscillatorTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.oscillator.TurnOn();
         }
     }
 }

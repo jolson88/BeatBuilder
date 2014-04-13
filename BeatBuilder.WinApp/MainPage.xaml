@@ -59,7 +59,7 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
 
-                <AppBarButton x:Name="OscillatorTestButton" Label="Test Oscillator" Margin="10" ClickMode="Press" PointerPressed="OscillatorTestButton_PointerPressed" PointerReleased="OscillatorTestButton_PointerReleased">
+                <AppBarButton x:Name="OscillatorTestButton" Label="Test Oscillator" Margin="10" ClickMode="Press" PointerReleased="OscillatorTestButton_PointerReleased" Click="OscillatorTestButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE189;" />
                     </AppBarButton.Icon>

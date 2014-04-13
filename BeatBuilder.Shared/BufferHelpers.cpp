@@ -19,8 +19,13 @@ byte* BeatBuilder::Audio::GetBytePointerFromBuffer(Windows::Storage::Streams::IB
 Windows::Storage::Streams::IBuffer^ BeatBuilder::Audio::CreateBuffer(int bufferSizeInBytes)
 {
 	auto buffer = ref new Windows::Storage::Streams::Buffer(bufferSizeInBytes);
-	byte* sample_data_ptr = GetBytePointerFromBuffer(buffer);
-	ZeroMemory(sample_data_ptr, bufferSizeInBytes);
-
+	ResetBuffer(buffer, bufferSizeInBytes);
+	
 	return buffer;
+}
+
+void BeatBuilder::Audio::ResetBuffer(Windows::Storage::Streams::IBuffer^ buffer, int bufferSizeInBytes)
+{
+	byte* sampleDataPtr = GetBytePointerFromBuffer(buffer);
+	ZeroMemory(sampleDataPtr, bufferSizeInBytes);
 }
